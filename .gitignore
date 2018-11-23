@@ -1,0 +1,20 @@
+.vscode/
+__pycache__/
+
+.DS_Store
+*.pyc
+
+# Virtualenv files
+/env
+
+# Test files
+.tox/
+hosts.txt
+hosts.txt.*
+
+# Coverage files
+.coverage
+htmlcov/
+
+# Build files
+*.egg-info
