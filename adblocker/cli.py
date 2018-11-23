@@ -28,9 +28,9 @@ def run_cli(mode=None, hosts_file=HOSTS_FILE, logging=None):
     backup = FileBackup(hosts_file, hosts_file + '.bak')
 
     tasks = [
-        Task('check.exists', check_file_exists, 'Checking if hosts file exists'),
-        Task('check.read', check_file_readable, 'Checking if hosts file is readable'),
-        Task('check.write', check_file_writable, 'Checking if hosts file is writable'),
+        Task('hosts.exists', check_file_exists, 'Checking if hosts file exists'),
+        Task('hosts.read', check_file_readable, 'Checking if hosts file is readable'),
+        Task('hosts.write', check_file_writable, 'Checking if hosts file is writable'),
     ]
     error_handler = create_error_handler(logging)
     if mode == 'add':
@@ -48,18 +48,18 @@ def add_adblock(logging, lock, backup):
         lock.acquire()
 
     return [
-        Task('lock_acquire', acquire_lock, 'Acquiring lock'),
-        Task('backup', backup.backup, 'Backing up hosts file'),
-        Task('fetch', fetch_adblock_list, 'Fetching adblock list'),
-        Task('write', write_hosts_file, 'Writing adblock list to hosts file', args=(backup.source,)),
+        Task('lock.acquire', acquire_lock, 'Acquiring lock'),
+        Task('hosts.backup', backup.backup, 'Backing up hosts file'),
+        Task('filter.fetch', fetch_adblock_list, 'Fetching adblock list'),
+        Task('hosts.write', write_hosts_file, 'Writing adblock list to hosts file', args=(backup.source,)),
     ]
 
 
 def remove_adblock(logging, lock, backup):
     return [
-        Task('lock_check', lock.raise_for_release, 'Checking for lock'),
-        Task('restore', backup.restore, 'Restoring hosts file'),
-        Task('release', lock.release, 'Releasing lock'),
+        Task('lock.check', lock.raise_for_release, 'Checking for lock'),
+        Task('hosts.restore', backup.restore, 'Restoring hosts file'),
+        Task('lock.release', lock.release, 'Releasing lock'),
     ]
 
 
