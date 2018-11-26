@@ -2,6 +2,7 @@ from test.test_cli import TestCLI
 from test.test_adblocker import TestAdblocker
 
 import unittest2
+import sys
 
 if __name__ == '__main__':
     test_cases = [
@@ -14,3 +15,5 @@ if __name__ == '__main__':
     main_suite = unittest2.TestSuite(suites)
     runner = unittest2.TextTestRunner()
     results = runner.run(main_suite)
+    if len(results.errors) > 0 or len(results.failures) > 0:
+        sys.exit(1)
