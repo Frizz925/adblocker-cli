@@ -1,6 +1,16 @@
-from test import test_cli
+from test.test_cli import TestCLI
+from test.test_adblocker import TestAdblocker
+
 import unittest2
 
-suite = unittest2.TestLoader().loadTestsFromModule(test_cli)
-runner = unittest2.TextTestRunner()
-runner.run(suite)
+if __name__ == '__main__':
+    test_cases = [
+        TestAdblocker,
+        TestCLI
+    ]
+
+    loader = unittest2.TestLoader()
+    suites = map(lambda x: loader.loadTestsFromTestCase(x), test_cases)
+    main_suite = unittest2.TestSuite(suites)
+    runner = unittest2.TextTestRunner()
+    results = runner.run(main_suite)
