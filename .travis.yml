@@ -1,15 +1,15 @@
-sudo: false
 language: python
 python:
   - 2.7
   - 3.6
   - 3.7
 install:
-  - pip install codecov
+  - pip install pipenv codecov
+  - pipenv install -d
 
 # TODO: Run tox tests
 script:
-  - coverage run tests.py
+  - pipenv run coverage run tests.py
 
 after_success:
   - codecov
