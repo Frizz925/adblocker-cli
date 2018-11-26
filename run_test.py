@@ -1,13 +1,19 @@
-from test.test_cli import TestCLI
+from test.test_logging import TestLogging
+from test.test_lock import TestLock
+from test.test_runner import TestRunner
 from test.test_adblocker import TestAdblocker
+from test.test_cli import TestCLI
 
 import unittest2
 import sys
 
 if __name__ == '__main__':
     test_cases = [
+        TestLogging,
+        TestLock,
+        TestRunner,
         TestAdblocker,
-        TestCLI
+        TestCLI,
     ]
 
     loader = unittest2.TestLoader()
