@@ -9,7 +9,7 @@ import os
 
 
 def run_cli(mode=None, hosts_file=HOSTS_FILE, logging=None):
-    if logging is None:
+    if logging is None:  # pragma: no cover
         logging = Logging()
 
     def check_file_exists():

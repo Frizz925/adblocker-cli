@@ -5,7 +5,7 @@ import sys
 
 class TaskRunner:
     def __init__(self, logging=None, error_handler=None):
-        if logging is None:
+        if logging is None:  # pragma: no cover
             logging = Logging(stdout=sys.stdout, stderr=sys.stderr)
         self._logging = logging
         self._error_handler = error_handler
