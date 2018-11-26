@@ -1,6 +1,6 @@
 from adblocker.cli import run_cli
 from adblocker.runner import HandledTaskError
-from adblocker.logging import Logging
+from adblocker.logging import Logging, DummyLogging
 from adblocker import DEBUG
 
 import unittest2
@@ -62,6 +62,11 @@ class TestCLI(unittest2.TestCase):
             self.do_remove_call_test()
         self.assertIn('state is released', str(cm.exception))
 
+    def test_invalid_argument(self):
+        with self.assertRaises(ValueError) as cm:
+            self.cli('dummy')
+        self.assertIn('Unknown mode', str(cm.exception))
+
     def do_add_call_test(self):
         os.close(os.open(FILENAME, os.O_CREAT | os.O_RDWR))
         self.cli('add', FILENAME)
@@ -91,13 +96,8 @@ class TestCLI(unittest2.TestCase):
 
 
 def create_cli_wrapper():
-    logging = Logging() if DEBUG else create_dummy_logging()
+    logging = Logging() if DEBUG else DummyLogging()
 
     def wrapper(*args):
         run_cli(*args, logging=logging)
     return wrapper
-
-
-def create_dummy_logging():
-    f = open(os.devnull, 'w')
-    return Logging(stdout=f, stderr=f)

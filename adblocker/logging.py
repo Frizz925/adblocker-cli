@@ -14,3 +14,11 @@ class Logging:
 
     def format_message(self, message, newline=True):
         return message if not newline else message + '\n'
+
+
+class DummyLogging(Logging):
+    def log(self, message, **kwargs):
+        pass
+
+    def error(self, message, **kwargs):
+        pass
