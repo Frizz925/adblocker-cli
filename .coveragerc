@@ -4,4 +4,4 @@ source = adblocker/
 [run]
 omit =
     */site-packages/*
-    */run_test.py
+    */tests.py
